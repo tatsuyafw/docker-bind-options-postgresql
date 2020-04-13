@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  db-a:
+  db-consistent:
     image: postgres:12.2
     ports:
       - 5432:5432
@@ -8,7 +8,17 @@ services:
     environment:
       - POSTGRES_PASSWORD
     volumes:
-      - "dbdata:/var/lib/postgresql/data"
+      - "consistent:/var/lib/postgresql/data:consistent"
+  db-cached:
+    image: postgres:12.2
+    ports:
+      - 5433:5432
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD
+    volumes:
+      - "cached:/var/lib/postgresql/data:cached"
 
 volumes:
-  dbdata:
+  consistent:
+  cached:
